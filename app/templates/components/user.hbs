@@ -1,0 +1,91 @@
+<div
+  class='w-96 p-2 border-b-2 border-solid border-green-400
+    {{if this.isPending "bg-gray-300" " hover:bg-green-200"}}
+    cursor-pointer'
+>
+
+  <div class='flex justify-between'>
+
+    <div class='p-2 inline-block'>
+      <span>{{this.member.name}}</span>
+      {{#if this.isGratherThanSeventeen}}
+        <span class='text-red-400'>- Adult</span>
+      {{/if}}
+    </div>
+
+    <div class='pl-2 inline-block'>
+      {{#unless this.isUserDataCompleted}}
+        <span class='text-red-300'>Incomplete</span>
+      {{/unless}}
+      {{#if this.isPending}}
+        <button
+          type='button'
+          class='border-2 border-black bg-slate-100 hover:bg-slate-300 rounded-md p-1'
+          {{on 'click' this.approve}}
+        >Enable</button>
+      {{/if}}
+      <button
+        type='button'
+        {{on 'click' (set this 'expanded' (not this.expanded))}}
+      >
+        {{#if this.expanded}}
+          <svg
+            class='w-6 h-6'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            xmlns='http://www.w3.org/2000/svg'
+          ><path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M19 9l-7 7-7-7'
+            ></path></svg>
+        {{else}}
+          <svg
+            class='w-6 h-6'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            xmlns='http://www.w3.org/2000/svg'
+          ><path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 15l7-7 7 7'
+            ></path></svg>
+        {{/if}}
+      </button>
+    </div>
+  </div>
+
+  {{#if this.expanded}}
+    <div class='border-solid border-2 p-2'>
+      <div>
+        <b>Fullname:</b>
+        <span>{{this.member.name}} {{this.member.lastName}}</span>
+      </div>
+      <div>
+        <b>Age:</b>
+        <span>{{this.member.age}}</span>
+      </div>
+      <div>
+        <b>Country:</b>
+        <span>{{this.member.country}}</span>
+      </div>
+      <div>
+        <b>Email:</b>
+        <span>{{this.member.email}}</span>
+      </div>
+      {{! template-lint-disable no-potential-path-strings }}
+      <img
+        data-src='{{this.member.avatar}}'
+        width='200'
+        height='200'
+        src='/assets/images/portrait_placeholder.png'
+        onLoad='this.src=this.getAttribute("data-src")'
+        alt='avatar'
+      />
+    </div>
+  {{/if}}
+</div>
